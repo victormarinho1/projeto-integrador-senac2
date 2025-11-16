@@ -1,0 +1,113 @@
+<div class="card flex justify-center">
+  <p-toast position="top-center" />
+</div>
+
+<div
+  [class]="{'bg-white' : isMobile, 'bg-gray-100': !isMobile}"
+  class="min-h-screen flex items-center justify-center bg-gray-100"
+>
+<div
+[class]="{'shadow-lg': !isMobile}"
+class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8"
+>
+
+    <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">E-mail</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          formControlName="email"
+        />
+      </div>
+
+      <!-- Senha -->
+      <div class="relative">
+        <label for="senha" class="block text-sm font-medium text-gray-700">Senha</label>
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          id="senha"
+          name="senha"
+          required
+          class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 pr-10"
+          formControlName="senha"
+        />
+
+        <i
+          (click)="togglePassword()"
+          [class]="showPassword ? 'pi pi-eye-slash' : 'pi pi-eye'"
+          class="cursor-pointer absolute inset-y-0 right-3 flex items-center text-gray-500"
+          style="
+            inset-inline-end: 0.70rem;
+            color:#94a3b8;
+            position: absolute;
+            top: 55%;
+            margin-top: calc(-1 * calc(var(1rem) / 2));
+            width: 1rem;
+            height: 1rem;
+          "
+        ></i>
+      </div>
+
+      <!-- Esqueceu senha -->
+      <div class="flex items-center justify-end">
+        <a href="#" class="text-sm text-blue-600 hover:underline">Esqueceu a senha?</a>
+      </div>
+
+      <!-- Botão Login -->
+      <button
+        [disabled]="!loginForm.valid"
+        [class]="{
+          'bg-gray-400': !loginForm.valid,
+          'bg-blue-600': loginForm.valid,
+          'hover:bg-blue-700': loginForm.valid,
+          'cursor-pointer': loginForm.valid
+        }"
+        type="submit"
+        class="w-full text-white py-2 rounded-xl font-semibold transition"
+      >
+        Entrar
+      </button>
+
+      <!-- Fazer Denúncia Anônima -->
+      <button
+        routerLink="/cadastro-denuncia"
+        type="button"
+        class="w-full text-white bg-red-500 hover:bg-red-700 py-2 rounded-xl font-semibold transition cursor-pointer"
+      >
+        Fazer denúncia anônima
+      </button>
+
+      <!-- 🔹 Seção Educativa -->
+      <button
+        routerLink="/educacao"
+        type="button"
+        class="w-full text-white bg-green-500 hover:bg-green-700 py-2 rounded-xl font-semibold transition cursor-pointer"
+      >
+        Acessar seção educativa
+      </button>
+
+      <!-- 🔹 Consultar Andamento -->
+      <button
+        routerLink="/consultar-protocolo"
+        type="button"
+        class="w-full text-white bg-indigo-500 hover:bg-indigo-700 py-2 rounded-xl font-semibold transition cursor-pointer"
+      >
+        Consultar andamento da denúncia
+      </button>
+    </form>
+
+    <p class="text-sm text-center text-gray-600 mt-6">
+      Não tem conta?
+      <a routerLink="/register" class="text-blue-600 font-medium hover:underline"
+        >Cadastre-se</a
+      >
+    </p>
+  </div>
+</div>

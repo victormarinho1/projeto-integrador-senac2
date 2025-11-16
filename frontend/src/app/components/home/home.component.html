@@ -1,0 +1,7 @@
+
+    @if(userToken?.role == 'CONSELHEIRO'){
+      <app-denuncias-list></app-denuncias-list>
+    }
+    @if(userToken?.role == 'ADMIN'){
+      <app-usuarios-list></app-usuarios-list>
+    }

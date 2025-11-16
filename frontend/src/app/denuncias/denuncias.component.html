@@ -1,0 +1,145 @@
+<form class="max-w-4xl mx-auto bg-white p-6 rounded-2xl shadow-md space-y-6" [formGroup]="denunciaForm"
+  (ngSubmit)="onSubmit()">
+  <h1 class="text-lg md:text-4xl font-extrabold text-gray-900 mb-6">Formulario de Cadastro de Denuncia</h1>
+  <!-- Descrição (ocupa largura toda) -->
+  <div>
+    <label for="descricao" class="block text-sm font-medium text-gray-700">Descrição*</label>
+    <textarea id="descricao" formControlName="descricao" required
+      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500"></textarea>
+  </div>
+
+  <!-- Grid com 2 colunas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Imagens -->
+    <div>
+      <label for="imagens" class="block text-sm font-medium text-gray-700">Imagens</label>
+      <input type="file" id="imagens" (change)="onFilesSelected($event)" multiple accept="image/*" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4
+               file:rounded-md file:border-0 file:text-sm file:font-semibold
+               file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+    </div>
+
+    <div>
+      <button (click)="localizacaoAtual()" type="button"
+        class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-blue-700 cursor-pointer">
+        Pegar localização atual
+      </button>
+    </div>
+
+    <!-- CEP -->
+    <div>
+      <label for="cep" class="block text-sm font-medium text-gray-700">CEP</label>
+      <input type="text" id="cep" formControlName="cep"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+    <!-- Endereço completo -->
+    <div>
+      <label for="enderecoCompleto" class="block text-sm font-medium text-gray-700">Endereço completo</label>
+      <textarea id="enderecoCompleto" formControlName="enderecoCompleto"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500"></textarea>
+    </div>
+
+    <!-- Cidade -->
+    <div>
+      <label for="rua" class="block text-sm font-medium text-gray-700">Rua</label>
+      <input type="text" id="rua" formControlName="rua" maxlength="100"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+    <!-- Cidade -->
+    <div>
+      <label for="bairro" class="block text-sm font-medium text-gray-700">Bairro</label>
+      <input type="text" id="bairro" formControlName="bairro" maxlength="100"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+    <!-- Cidade -->
+    <div>
+      <label for="cidade" class="block text-sm font-medium text-gray-700">Cidade</label>
+      <input type="text" id="cidade" formControlName="cidade" maxlength="100"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+    <!-- Estado -->
+    <div>
+      <label for="estado" class="block text-sm font-medium text-gray-700">Estado (UF)</label>
+      <input type="text" id="estado" formControlName="estado"  maxlength="2"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+    <!-- Latitude -->
+    <div>
+      <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude</label>
+      <input type="text" id="latitude" formControlName="latitude" maxlength="100"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+    <!-- Longitude -->
+    <div>
+      <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude</label>
+      <input type="text" id="longitude" formControlName="longitude"  maxlength="2"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border focus:ring-blue-500 focus:border-blue-500" />
+    </div>
+
+  </div>
+  <!-- Botão -->
+  <div class="pt-4 flex flex-col space-y-4 items-center justify-center">
+    <button [disabled]="!denunciaForm.valid"
+      [class]="{'bg-gray-400' : !denunciaForm.valid, 'bg-blue-600' : denunciaForm.valid, 'hover:bg-blue-700':denunciaForm.valid, 'cursor-pointer' : denunciaForm.valid}"
+      type="submit" class="w-5/6 bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow hover:bg-blue-700">
+      Cadastrar
+    </button>
+    <button
+  class="bg-gray-200 w-5/6 text-gray-800 font-semibold py-2 px-4 rounded-md shadow hover:bg-gray-300 cursor-pointer"
+  [routerLink]="['/']">
+  ← Voltar
+</button>
+
+  </div>
+</form>
+
+<p-dialog
+  header="Denúncia Enviada com Sucesso!"
+  [(visible)]="modalVisible"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false">
+
+  <div class="space-y-4 text-sm text-gray-800 leading-relaxed">
+
+    <p>
+      Agradecemos sua colaboração. Sua atitude é fundamental para proteger nossas crianças e adolescentes.
+    </p>
+
+    <div class="bg-gray-100 border-l-4 border-green-500 p-4 rounded">
+      <h3 class="font-semibold text-green-700 mb-2">Número do Protocolo</h3>
+      <p class="mb-3">
+        Este é o <strong>único comprovante</strong> da sua denúncia. Guarde este número em um local seguro:
+      </p>
+
+      <div class="flex items-center gap-2">
+        <input #inputRef type="text" pInputText [(ngModel)]="protocolo" readonly class="w-full" />
+        <button
+          pButton
+          type="button"
+          icon="pi pi-copy"
+          (click)="copiarTexto(inputRef)"
+          label="Copiar"
+          class="p-button-sm" ></button>
+      </div>
+    </div>
+
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded">
+      <h3 class="font-semibold text-yellow-800 mb-2">Aviso Importante sobre seu Anonimato</h3>
+      <p>
+        Para garantir sua segurança e anonimato total, <strong>o aplicativo não enviará notificações</strong> sobre o andamento deste caso.
+        Tenha a certeza de que sua denúncia foi recebida e será encaminhada com prioridade para os órgãos responsáveis.
+      </p>
+    </div>
+
+  </div>
+</p-dialog>
+
+    <p-toast />

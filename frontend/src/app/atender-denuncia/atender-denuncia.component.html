@@ -1,0 +1,237 @@
+<div class="min-h-screen bg-emphasis rounded-2xl p-4 sm:p-8">
+  <div *ngIf="isLoading" class="text-center py-20">
+    <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+    <p class="text-xl text-gray-600 mt-2">Carregando denúncia...</p>
+  </div>
+
+  <div *ngIf="!isLoading && denuncia">
+    <div class="flex justify-between items-center mb-6">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-800">
+          Atendimento
+          <span class="text-blue-600 break-all">{{ denuncia.protocolo }}</span>
+        </h1>
+        <p class="text-gray-600">
+          Analise os detalhes e defina a prioridade do atendimento.
+        </p>
+      </div>
+      <p-tag [severity]="getSeverity(denuncia.status)" [value]="denuncia.status" />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 space-y-6">
+        <p-card header="Informações da Denúncia">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Endereço</label>
+              <p class="text-base text-gray-800 font-medium">{{ denuncia.rua }} {{ denuncia.numero }}</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Bairro / Cidade</label>
+              <p class="text-base text-gray-800 font-medium">{{ denuncia.bairro }} / {{ denuncia.cidade }}</p>
+            </div>
+          </div>
+          <hr class="my-4" />
+          <div>
+            <label class="block text-sm font-medium text-gray-500">Descrição da Ocorrência</label>
+            <p class="text-base text-gray-800 whitespace-pre-wrap">{{ denuncia.descricao }}</p>
+          </div>
+        </p-card>
+
+        <p-card header="Localização">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Latitude</label>
+              <p class="text-base text-gray-800 font-medium">{{ denuncia.latitude || 'Não informada' }}</p>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Longitude</label>
+              <p class="text-base text-gray-800 font-medium">{{ denuncia.longitude || 'Não informada' }}</p>
+            </div>
+          </div>
+        </p-card>
+
+<form [formGroup]="atendimentoForm" (ngSubmit)="onSubmit()">
+          <p-card header="Plano de Ação">
+            <div class="space-y-6">
+              <div>
+                <label class="block text-lg font-semibold text-gray-700 mb-2">1. Defina a Prioridade do Atendimento</label>
+                <p-selectButton
+                  [options]="prioridadeOptions"
+                  optionLabel="label"
+                  optionValue="value"
+                  [allowEmpty]="false"
+                  (onChange)="prioridadeSelecionada($event)"
+                  [disabled]="denuncia.status === 'CONCLUIDA'"
+                  formControlName="prioridade"
+                >
+                  <ng-template let-item>
+                    <div class="flex items-center gap-2">
+                      <i [class]="item.icon"></i>
+                      <span>{{ item.label }}</span>
+                    </div>
+                  </ng-template>
+                </p-selectButton>
+              </div>
+
+              <div>
+                <label for="procedimentos" class="block text-lg font-semibold text-gray-700 mb-2">2. Envie uma equipe de busca quando disponível</label>
+
+                @if(denuncia.equipe_enviada){
+                  <p-button
+                  label="Equipe enviada"
+                  variant="text"
+                  [raised]="true"
+                  disabled=""
+                />
+                }@else {
+<p-button
+                  label="Enviar Equipe"
+                  variant="text"
+                  [raised]="true"
+                  (click)="enviarEquipe()"
+                  [disabled]="denuncia.status === 'CONCLUIDA'"
+                />
+                }
+              </div>
+
+<p-dialog
+  header="Solicitação para enviar equipe registrada com Sucesso!"
+  [(visible)]="modalVisivel"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false">
+
+  <div class="space-y-4 text-sm text-gray-800 leading-relaxed">
+
+    <p>
+      A equipe será enviada ao local para localizar as crianças. Aguarde o retorno da equipe para descrever os acontecimentos no campo abaixo.
+    </p>
+
+    <div class="bg-gray-100 border-l-4 border-green-500 p-4 rounded">
+      <h3 class="font-semibold text-green-700 mb-2">Ação Enviada</h3>
+      <p class="mb-3">
+        A equipe foi notificada e está a caminho do local. Você pode retornar a essa tela para registrar os próximos passos quando receber um retorno.
+      </p>
+    </div>
+
+    <div class="bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded">
+      <h3 class="font-semibold text-yellow-800 mb-2">Aviso Importante</h3>
+      <p>
+        O processo de busca está em andamento. Não se preocupe, estamos cuidando da situação de acordo com a prioridade. Aguarde o retorno da equipe para proceder com os detalhes da ocorrência.
+      </p>
+    </div>
+
+    <p-footer>
+      <p-button label="OK" icon="pi pi-check" (click)="fecharModal()" class="p-button-success"></p-button>
+    </p-footer>
+  </div>
+</p-dialog>
+
+              <div>
+                <label for="procedimentos" class="block text-lg font-semibold text-gray-700 mb-2">3. Descreva os Procedimentos Realizados</label>
+                <textarea
+                  pInputTextarea
+                  id="procedimentos"
+                  formControlName="procedimentos"
+                  rows="5"
+                  class="w-full"
+                  placeholder="Detalhe as ações tomadas, visitas, contatos, encaminhamentos, etc."
+                  [disabled]="denuncia.status === 'CONCLUIDA'"
+                  [ngClass]="{'p-disabled': denuncia.status === 'CONCLUIDA'}"
+                  [value]="denuncia.devolutiva"
+                >
+{{denuncia.devolutiva}}
+              </textarea>
+
+                <small *ngIf="atendimentoForm.get('procedimentos')?.invalid && atendimentoForm.get('procedimentos')?.touched" class="text-red-500 block mt-1">
+                  A descrição dos procedimentos é obrigatória para finalizar o atendimento
+                </small>
+              </div>
+
+              <div class="border-t pt-4 space-x-2">
+                <p-button
+                  label="Voltar"
+                  icon="pi pi-chevron-left"
+                  routerLink="/home"
+                />
+                @if(denuncia.status != 'CONCLUIDA'){
+ <p-button
+                  label="Finalizar Atendimento"
+                  icon="pi pi-check-circle"
+                  styleClass="p-button-success"
+                  type="submit"
+                  [disabled]="denuncia.status === 'CONCLUIDA'"
+                />
+                }
+
+              </div>
+
+
+
+              <!-- Modal de Sucesso -->
+<p-dialog
+  header="Solicitação para enviar equipe registrada com Sucesso!"
+  [(visible)]="modalVisivel2"
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false">
+
+  <div class="space-y-4 text-sm text-gray-800 leading-relaxed">
+
+       <p>
+      A devolutiva da equipe foi registrada com sucesso. As informações foram vinculadas ao protocolo para que o cidadão consiga ler as informações.
+    </p>
+
+
+
+    <p-footer>
+      <p-button label="OK" icon="pi pi-check" (click)="fecharModal2()" class="p-button-success"></p-button>
+    </p-footer>
+  </div>
+</p-dialog>
+
+            </div>
+          </p-card>
+        </form>
+      </div>
+
+      <div class="lg:col-span-1">
+        <p-card *ngIf="denuncia.imagens.length === 0" header="Sem imagens">
+          <div class="grid grid-nogutter justify-center">
+            <img src="assets/images/image.png" class="rounded-md w-24 h-24 object-cover" />
+          </div>
+        </p-card>
+
+        <p-card *ngIf="denuncia.imagens.length !== 0" header="Evidências (Imagens)">
+          <p-galleria [value]="denuncia.imagens" [numVisible]="5" [containerStyle]="{ 'max-width': '640px' }">
+            <!-- Template para exibição do item -->
+            <ng-template pTemplate="item" let-item>
+              <img
+                [src]="'http://localhost:8080/images/' + item.url"
+                [alt]="item.alt"
+                style="width: 100%; display: block"
+                class="rounded-md w-24 h-80 object-cover"
+              />
+            </ng-template>
+
+            <!-- Template para exibição da miniatura -->
+            <ng-template pTemplate="thumbnail" let-item>
+              <div class="grid grid-nogutter justify-center">
+                <img
+                  [src]="'http://localhost:8080/images/' + item.url"
+                  [alt]="item.alt"
+                  class="rounded-md w-20 h-16 object-cover"
+                />
+              </div>
+            </ng-template>
+          </p-galleria>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

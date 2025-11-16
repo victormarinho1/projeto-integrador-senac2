@@ -1,0 +1,12 @@
+<p-menubar [model]="items" class="mx-7" style="border:none" >
+
+  <ng-template #end>
+        <div class="flex items-center gap-2">
+            <p-menu #menu [model]="itemsAvatar" [popup]="true" />
+            <p-button (onClick)="toggleDarkMode()">
+            <i [ngClass]="darkMode ? 'pi pi-sun' : 'pi pi-moon'"></i>
+                    </p-button>
+            <p-avatar (click)="menu.toggle($event)" style="cursor:pointer" image="https://primefaces.org/cdn/primeng/images/demo/avatar/amyelsner.png" shape="circle" />
+        </div>
+    </ng-template>
+</p-menubar>
