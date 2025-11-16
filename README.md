@@ -62,6 +62,7 @@ A arquitetura do projeto segue o modelo cliente-servidor, utilizando as seguinte
 ## 🚀 Instalação e Execução
 
 Para executar o projeto localmente, você os seguinte requisitos instalados:
+
 [Git](https://git-scm.com/)
 
 [Java (JDK 17+)](https://www.oracle.com/java/technologies/downloads/)
