@@ -66,5 +66,5 @@ Para executar o projeto localmente, você precisará ter o [Git](https://git-scm
 ### 1. Clonar o Repositório
 ```bash
 git clone https://github.com/victormarinho1/projeto-integrador-senac.git
-cd projeto-integrador
+cd projeto-integrador-senac
 ./iniciar-sistema.sh
