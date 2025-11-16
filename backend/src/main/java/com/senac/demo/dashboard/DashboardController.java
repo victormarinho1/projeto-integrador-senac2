@@ -27,4 +27,10 @@ public class DashboardController {
         List<DenunciasPorUsuarioDTO> d = this.dashboardService.getDenunciasAtendidas();
         return ResponseEntity.ok(d);
     }
+
+    @GetMapping("/denuncias-por-mes")
+    public ResponseEntity<List<DenunciaPorMesSigla>> getDenunciasPorMes() {
+        List<DenunciaPorMesSigla> lista = this.dashboardService.getDenunciasPorMes();
+        return ResponseEntity.ok(lista);
+    }
 }

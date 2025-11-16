@@ -1,5 +1,7 @@
 package com.senac.demo.denuncia;
 
+import com.senac.demo.dashboard.DenunciaPorMesDTO;
+import com.senac.demo.dashboard.DenunciaPorMesSigla;
 import com.senac.demo.dashboard.DenunciasPorUsuarioDTO;
 import com.senac.demo.denunciaImagem.DenunciaImagem;
 import com.senac.demo.denunciaImagem.DenunciaImagemRepository;
@@ -12,8 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DenunciaService {
@@ -141,6 +143,34 @@ public class DenunciaService {
         denuncia.setDevolutiva(devolutiva.devolutiva());
         denuncia.setStatus(StatusDenuncia.CONCLUIDA);
        return this.denunciaRepository.save(denuncia);
+    }
+
+    public List<DenunciaPorMesSigla> getDenunciasPorMes() {
+        String[] mesesAbreviados = {
+                "JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"
+        };
+        // Obtém a lista de denúncias por mês
+        List<DenunciaPorMesDTO> list = this.denunciaRepository.countDenunciasByMonth();
+
+        // Cria um mapa para garantir que todos os meses de 1 a 12 existam, com o total inicializado como 0
+        Map<Integer, Long> mesesComTotais = new HashMap<>();
+        for (int i = 1; i <= 12; i++) {
+            mesesComTotais.put(i, 0L);  // Inicializa todos os meses com 0
+        }
+
+        // Preenche o mapa com os dados reais da consulta ao banco
+        for (DenunciaPorMesDTO denuncia : list) {
+            int mes = denuncia.mes();  // Supondo que 'getMes()' retorne o mês (1 a 12)
+            long total = denuncia.total();  // Supondo que 'getTotal()' retorne o número de denúncias
+            mesesComTotais.put(mes, total);  // Substitui o valor do mês com o total real
+        }
+        List<DenunciaPorMesSigla> listDenuncia = new ArrayList<>();
+        for (Map.Entry<Integer, Long> entry : mesesComTotais.entrySet()) {
+            Integer chave = entry.getKey();
+            Long valor = entry.getValue();
+            listDenuncia.add(new DenunciaPorMesSigla(mesesAbreviados[chave-1],valor));
+        }
+        return listDenuncia;
     }
 
 }

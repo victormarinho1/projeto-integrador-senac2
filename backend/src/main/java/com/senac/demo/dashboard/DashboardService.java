@@ -22,6 +22,10 @@ public class DashboardService {
       return new ContagemStatusDenunciaDTO(total_nova,total_em_andamento,total_concluida);
     }
 
+    public List<DenunciaPorMesSigla> getDenunciasPorMes() {
+        return this.denunciaService.getDenunciasPorMes();
+    }
+
     public List<DenunciasPorUsuarioDTO> getDenunciasAtendidas() {
         return denunciaService.getDenunciasAtendidas();
     }

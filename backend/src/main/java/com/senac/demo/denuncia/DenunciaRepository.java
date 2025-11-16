@@ -1,5 +1,6 @@
 package com.senac.demo.denuncia;
 
+import com.senac.demo.dashboard.DenunciaPorMesDTO;
 import com.senac.demo.dashboard.DenunciasPorUsuarioDTO;
 import com.senac.demo.usuario.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +27,9 @@ public interface DenunciaRepository extends JpaRepository<Denuncia, Long> {
             "ORDER BY 3 DESC")
     List<DenunciasPorUsuarioDTO> countDenunciasAtendidasByUsuario();
 
+
+    @Query("SELECT EXTRACT(MONTH FROM d.dataCriacao) AS mes, COUNT(d) AS total " +
+            "FROM Denuncia d " +
+            "GROUP BY EXTRACT(MONTH FROM d.dataCriacao)")
+            List<DenunciaPorMesDTO> countDenunciasByMonth();
 }
