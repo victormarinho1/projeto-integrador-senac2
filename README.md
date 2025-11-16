@@ -23,7 +23,7 @@ O sistema é projetado com três níveis de acesso distintos:
 ### Portal do Cidadão (Denunciante)
 * **Registro de Denúncia Anônima:** Formulário simplificado para envio de denúncias sem a necessidade de identificação.
 * **Geolocalização:** Permite informar a localização exata da ocorrência.
-* **Upload de Evidências:** Capacidade de anexar imagens para comprovar a d[db](db)enúncia.
+* **Upload de Evidências:** Capacidade de anexar imagens para comprovar a denúncia.
 * **Geração de Protocolo:** Emissão de um número de protocolo para acompanhamento (disponível para denúncias identificadas).
 * **Seção Educativa:** Informações sobre o que caracteriza o trabalho infantil e as leis vigentes.
 
