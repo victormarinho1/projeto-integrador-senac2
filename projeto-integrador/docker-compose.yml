@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: java_app_container
+    restart: on-failure:30
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-db
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres-db:5432/${DB_DATABASE}
+      - spring.datasource.username=postgres
+      - spring.datasource.password=${DB_PASSWORD}
+      - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+      - spring.jpa.hibernate.ddl-auto=none
+      - string.regex=${SECRET_KEY}
+      - api.security.token.secret=JWT_SCRET:${SECRET_KEY}
+      - spring.mvc.throw-exception-if-no-handler-found=true
+      - spring.web.resources.add-mappings=false
+    networks:
+      - projeto_integrador
+    volumes:
+      - ./uploads:/app/uploads
+
+  postgres-db:
+    image: postgres:latest
+    container_name: projeto-integrador-postgres
+    environment:
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=${DB_PASSWORD}
+    - POSTGRES_DB=${DB_DATABASE}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - projeto_integrador
+    
+networks:
+  projeto_integrador:
+    external: true
