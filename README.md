@@ -73,7 +73,7 @@ Para executar o projeto localmente, você os seguinte requisitos instalados:
 
 [Angular (Angular CLI 20+)](https://angular.dev/installation)
 
-### 1. Clonar o Repositório
+### 1. Copiar e colar os comandos abaixo no terminal git.
 ```bash
 git clone https://github.com/victormarinho1/projeto-integrador-senac.git
 cd projeto-integrador-senac
