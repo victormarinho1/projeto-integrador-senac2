@@ -63,9 +63,13 @@ A arquitetura do projeto segue o modelo cliente-servidor, utilizando as seguinte
 
 Para executar o projeto localmente, você os seguinte requisitos instalados:
 [Git](https://git-scm.com/)
+
 [Java (JDK 17+)](https://www.oracle.com/java/technologies/downloads/)
+
 [Angular (Angular CLI 20+)](https://angular.dev/installation)
+
 [Node.js](https://nodejs.org/)
+
 [Docker](https://www.docker.com/)
 
 ### 1. Clonar o Repositório
