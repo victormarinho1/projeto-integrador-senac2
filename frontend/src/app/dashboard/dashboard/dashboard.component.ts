@@ -11,6 +11,11 @@ interface StatusData {
   total_concluidas: number;
 }
 
+interface DenunciasPorMes {
+  mes: number;
+  total: number;
+}
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -55,7 +60,7 @@ export class DashboardComponent implements OnInit {
           ctx.fillStyle = '#333';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          ctx.fillText('75%', centerX + 7, centerY);
+          ctx.fillText('', centerX + 7, centerY);
           ctx.font = '14px sans-serif';
           ctx.fillStyle = '#666';
           ctx.restore();
@@ -81,31 +86,34 @@ export class DashboardComponent implements OnInit {
       this.novas = d.total_novas;
       this.andamento = d.total_em_andamento;
       this.concluidas = d.total_concluidas;
-
+      this.realizadas = this.novas + this.andamento + this.concluidas;
       this.basicData = {
         labels: ['Novas', 'Em andamento', 'Concluídas'],
         datasets: [
           {
             label: 'Denúncias',
             data: [d.total_novas, d.total_em_andamento, d.total_concluidas],
-            backgroundColor: ['#f87171', '#facc15', '#4ade80']
+            backgroundColor: ['#f87171', '#facc15', primaryColor]
           },
         ],
       };
     });
 
-    // 📈 Gráfico mensal
-    this.basicData2 = {
-      labels: ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'],
+    this.dashboardService.showDenunciasPorMes().subscribe((d: DenunciasPorMes[])=>{
+      const meses = d.map(item => item.mes);
+        const totais = d.map(item => item.total);
+this.basicData2 = {
+      labels: meses,
       datasets: [
         {
           label: 'Denúncias',
-          data: [
-            540, 325, 702, 620, 400, 550, 670, 720, 830, 500, 650, 710],
+          data: totais,
           backgroundColor: Array(12).fill(primaryColor),
         },
       ],
     };
+    })
+
 
     // ⚙️ Opções Doughnut
     this.basicOptions = {
@@ -124,7 +132,7 @@ export class DashboardComponent implements OnInit {
         tooltip: { enabled: true },
         centerText: {}
       },
-     
+
     };
 
     this.cd.markForCheck();

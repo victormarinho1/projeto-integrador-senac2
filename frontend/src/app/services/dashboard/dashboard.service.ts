@@ -14,13 +14,17 @@ interface StatusData {
 export class DashboardService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
- 
-  
+
+
   showTotalStatus():Observable<StatusData>{
     return this.http.get<StatusData>(`${this.apiUrl}/dashboard/total-status`);
   }
 
   showDenunciasAtendidas():Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/dashboard/denuncias-atendidas`);
+  }
+
+  showDenunciasPorMes():Observable<any>{
+    return this.http.get<any>(`${this.apiUrl}/dashboard/denuncias-por-mes`);
   }
 }
