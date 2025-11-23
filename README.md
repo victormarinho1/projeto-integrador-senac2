@@ -59,6 +59,29 @@ A arquitetura do projeto segue o modelo cliente-servidor, utilizando as seguinte
 
 ---
 
+
+## **Tarefas Desenvolvidas pela Equipe**
+
+### **Produto Mínimo Viável (MVP):**
+- **Backend:** Victor Hugo Ferreira Marinho
+- **Frontend:** Victor Hugo Ferreira Marinho
+- **Banco de Dados:** Victor Hugo Ferreira Marinho
+
+### **Protótipo Funcional:**
+- Valdir F. de Paula Jr.
+- Vitor da Silva Alves
+
+---
+
+## **Links Importantes**
+
+- **Repositório no GitHub:**  
+  [Projeto Integrador - GitHub](https://github.com/victormarinho1/projeto-integrador-senac)
+
+- **Vídeo Apresentando o Produto Mínimo Viável:**  
+  [Assista no YouTube](https://www.youtube.com/watch?v=vpFbB4O5XhY&t=31s)
+
+
 ## 🚀 Instalação e Execução
 
 Para executar o projeto localmente, você os seguinte requisitos instalados:
