@@ -1,0 +1,62 @@
+/* style.css - protótipo melhorado */
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --accent:#2b7cff;
+  --muted:#6b7280;
+  --success:#28a745;
+  --shadow: 0 6px 18px rgba(20,30,50,0.06);
+  --radius:10px;
+  --maxw:1100px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#0f172a}
+.app-root{display:flex;min-height:100vh;align-items:stretch;gap:24px;padding:24px;max-width:var(--maxw);margin:18px auto}
+.sidebar{width:260px;background:var(--accent);color:#fff;padding:18px;border-radius:12px;flex-shrink:0;display:flex;flex-direction:column;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}
+.brand-text h1{font-size:18px;margin:0}
+.nav-list{list-style:none;padding:12px 0;margin:12px 0 0 0}
+.nav-item{padding:10px 12px;border-radius:8px;cursor:pointer;color:rgba(255,255,255,0.95);margin-bottom:6px}
+.nav-item.active{background:rgba(255,255,255,0.08)}
+.sidebar-foot{font-size:12px;color:rgba(255,255,255,0.8);text-align:center;padding-top:12px;border-top:1px solid rgba(255,255,255,0.04)}
+
+.main{flex:1}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.icon-btn{background:transparent;border:0;font-size:20px;cursor:pointer}
+.btn{padding:8px 12px;border-radius:8px;border:0;cursor:pointer;background:#fff}
+.btn.ghost{background:transparent;border:1px solid #e6eefb}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.large{padding:12px 18px;font-size:16px}
+.card{background:var(--card);padding:18px;border-radius:12px;box-shadow:var(--shadow)}
+.hero{display:flex;gap:18px;align-items:center;padding:24px}
+.hero-left{flex:1}
+.lead{color:var(--muted);margin-top:6px}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+
+.form-shell{max-width:720px;margin:0 auto}
+.form-stepper{display:flex;gap:10px;margin-bottom:12px;align-items:center}
+.step{background:#f3f6fb;padding:8px 10px;border-radius:8px;display:flex;gap:8px;align-items:center}
+.step.active{background:var(--accent);color:#fff}
+.field{display:block;margin-bottom:10px}
+.field span{display:block;font-weight:600;margin-bottom:6px}
+.field input[type="text"], .field textarea, .field input[type="file"]{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eefb;background:#fbfdff}
+.map-sim{margin:10px 0}
+.map-body{height:120px;display:flex;align-items:center;justify-content:center;color:var(--muted);border-radius:8px;border:1px dashed #e6eefb;background:#fbfdff}
+
+.form-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+
+.cards-grid .card h4{margin:0 0 8px 0}
+.admin-sample .table{width:100%;border-collapse:collapse}
+.table th, .table td{padding:8px;border-bottom:1px solid #eef3ff;text-align:left}
+.success-card{text-align:center}
+.tick{width:48px;height:48px;margin:0 auto 12px;display:block;background:var(--success);border-radius:50%;padding:8px}
+
+@media (max-width:900px){
+  .app-root{flex-direction:column;padding:12px}
+  .sidebar{width:100%;display:flex;flex-direction:row;gap:12px;align-items:center;padding:12px;border-radius:10px}
+  .nav-list{display:flex;gap:6px;overflow:auto}
+  .cards-grid{grid-template-columns:1fr}
+  .hero{flex-direction:column;align-items:flex-start}
+}
+

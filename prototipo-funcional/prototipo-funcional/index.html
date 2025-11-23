@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Canal de Denúncia — Trabalho Infantil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app-root">
+
+    <!-- SIDEBAR / NAV -->
+    <nav class="sidebar" aria-label="Menu Principal">
+      <div class="brand" role="banner">
+        <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#fff" d="M12 1L3 5v6c0 5.25 3.84 10.74 9 12 5.16-1.26 9-6.75 9-12V5l-9-4z"/>
+        </svg>
+        <div class="brand-text">
+          <h1>Canal de Denúncia</h1>
+          <small>Trabalho Infantil — Protótipo</small>
+        </div>
+      </div>
+
+      <ul class="nav-list" role="navigation">
+        <li class="nav-item active" data-nav="home" tabindex="0">Denunciar (Cidadão)</li>
+        <li class="nav-item" data-nav="form" tabindex="0">Formulário</li>
+        <li class="nav-item" data-nav="admin" tabindex="0">Painel (Profissional)</li>
+        <li class="nav-item" data-nav="about" tabindex="0">Sobre o Projeto</li>
+      </ul>
+
+      <footer class="sidebar-foot">
+        <small>Protótipo • Anônimo • Seguro</small>
+      </footer>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="main" role="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar" role="banner">
+        <div class="top-left">
+          <button id="toggleSidebar" class="icon-btn" aria-label="Abrir menu">☰</button>
+          <h2 id="pageTitle">Fazer Denúncia</h2>
+        </div>
+        <div class="top-right">
+          <button id="btnHome" class="btn ghost">Início</button>
+          <button id="btnAdmin" class="btn primary">Entrar no Painel</button>
+        </div>
+      </header>
+
+      <!-- VIEWS (SPA) -->
+      <section class="views">
+
+        <!-- HOME -->
+        <section id="view-home" class="view active" aria-labelledby="homeTitle">
+          <div class="hero card">
+            <div class="hero-left">
+              <h3 id="homeTitle">Denuncie casos de <strong>Trabalho Infantil</strong></h3>
+              <p class="lead">Sua denúncia é <strong>anônima</strong>, segura e pode salvar vidas. Siga 3 passos simples.</p>
+              <div class="hero-actions">
+                <button id="startReport" class="btn primary large">Fazer Denúncia Anônima</button>
+                <button id="learnMore" class="btn ghost" data-nav-target="about">Como funciona?</button>
+              </div>
+            </div>
+            <div class="hero-right" aria-hidden="true">
+              <!-- simple illustration -->
+              <svg viewBox="0 0 200 140" class="illustr">
+                <rect x="6" y="10" rx="12" ry="12" width="188" height="120" fill="#f7fbff"/>
+                <g transform="translate(26,20)">
+                  <circle cx="30" cy="32" r="18" fill="#ffd7b5"/>
+                  <rect x="56" y="10" width="70" height="26" rx="6" fill="#cfe8ff"/>
+                  <rect x="0" y="66" width="140" height="12" rx="6" fill="#e6f4ee"/>
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <div class="cards-grid">
+            <article class="info card" aria-hidden="false">
+              <h4>Privacidade</h4>
+              <p>Não pedimos nome ou CPF. Anexos têm metadados removidos no envio.</p>
+            </article>
+            <article class="info card">
+              <h4>Protocolo</h4>
+              <p>Ao enviar, você recebe um número de protocolo para referência.</p>
+            </article>
+            <article class="info card">
+              <h4>Apoio</h4>
+              <p>Denúncias são encaminhadas ao Conselho Tutelar e órgãos competentes.</p>
+            </article>
+          </div>
+        </section>
+
+        <!-- FORM -->
+        <section id="view-form" class="view" aria-labelledby="formTitle">
+          <div class="form-shell card">
+            <div class="form-stepper" role="tablist" aria-label="Progresso do formulário">
+              <div class="step active" data-step="1" role="tab"><span>1</span><small>Localização</small></div>
+              <div class="step" data-step="2" role="tab"><span>2</span><small>Descrição</small></div>
+              <div class="step" data-step="3" role="tab"><span>3</span><small>Revisar</small></div>
+            </div>
+
+            <form id="reportForm" class="report-form" novalidate>
+              <!-- STEP 1 -->
+              <div class="step-panel active" data-step="1">
+                <h3 id="formTitle">Informe o local da ocorrência</h3>
+                <label class="field">
+                  <span>Endereço (Rua, Bairro, Cidade)</span>
+                  <input id="inputEndereco" name="endereco" placeholder="Ex: Rua das Flores, Bairro Centro, Fortaleza" required>
+                </label>
+
+                <div class="map-sim card small" aria-hidden="false">
+                  <div class="map-header">Mapa (simulado)</div>
+                  <div class="map-body" id="mapPreview">[ Ponto geográfico será mostrado aqui ]</div>
+                </div>
+
+                <div class="form-actions">
+                  <button type="button" id="formNext1" class="btn primary">Avançar</button>
+                </div>
+              </div>
+
+              <!-- STEP 2 -->
+              <div class="step-panel" data-step="2">
+                <h3>Descreva o que você observou</h3>
+                <label class="field">
+                  <span>Descrição</span>
+                  <textarea id="inputDescricao" name="descricao" rows="6" placeholder="Ex: Criança vendendo doces durante horário escolar, aparenta 10 anos..." required></textarea>
+                </label>
+
+                <label class="field">
+                  <span>Anexos (opcional) — fotos, vídeo curto</span>
+                  <input id="inputAnexo" name="anexo" type="file" accept="image/,video/,audio/*">
+                  <small class="muted">Anexos serão simulados; metadados removidos no envio.</small>
+                </label>
+
+                <div class="form-actions">
+                  <button type="button" id="formBack2" class="btn">Voltar</button>
+                  <button type="button" id="formNext2" class="btn primary">Avançar</button>
+                </div>
+              </div>
+
+              <!-- STEP 3 -->
+              <div class="step-panel" data-step="3">
+                <h3>Revise sua denúncia</h3>
+                <div class="review card small" id="reviewBox" aria-live="polite">
+                  <!-- populated dynamically -->
+                </div>
+
+                <label class="field checkbox" style="margin-top:10px">
+                  <input id="confirmCheck" type="checkbox"> <span>Declaro que as informações fornecidas são verdadeiras.</span>
+                </label>
+
+                <div class="form-actions">
+                  <button type="button" id="formBack3" class="btn">Voltar</button>
+                  <button type="submit" id="submitReport" class="btn primary" disabled>Enviar Denúncia Segura</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ADMIN (simulado) -->
+        <section id="view-admin" class="view" aria-labelledby="adminTitle">
+          <div class="card">
+            <h3 id="adminTitle">Painel (Protótipo)</h3>
+            <p>Visão simulada para profissionais: lista de denúncias, filtros e detalhes do caso.</p>
+            <div class="admin-sample">
+              <table class="table">
+                <thead><tr><th>Protocolo</th><th>Prioridade</th><th>Endereço</th><th>Status</th></tr></thead>
+                <tbody>
+                  <tr><td>#2025000001</td><td>Alta</td><td>Rua das Flores, Fortaleza</td><td>Em Verificação</td></tr>
+                  <tr><td>#2025000002</td><td>Média</td><td>Av. Central, São Paulo</td><td>Novo</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ABOUT / PROJETO -->
+        <section id="view-about" class="view" aria-labelledby="aboutTitle">
+          <div class="card">
+            <h3 id="aboutTitle">Sobre o Projeto Integrador</h3>
+            <p>Protótipo desenvolvido para o <strong>Projeto Integrador — Centro Universitário Senac (2025)</strong>. Objetivo: oferecer uma plataforma acessível e segura para a denúncia de trabalho infantil, preservando o anonimato e conectando denúncias aos órgãos competentes (Conselho Tutelar, MPT).</p>
+
+            <h4>Principais funcionalidades</h4>
+            <ul>
+              <li>Registro de denúncias com ou sem identificação.</li>
+              <li>Geolocalização do local da ocorrência (simulada no protótipo).</li>
+              <li>Upload de evidências (imagens, vídeo, áudio) com remoção de metadados.</li>
+              <li>Painel administrativo para triagem e acompanhamento.</li>
+            </ul>
+
+            <h4>Tecnologias sugeridas</h4>
+            <p>Backend: Java + Spring Boot • Frontend: Angular • Banco: PostgreSQL • Conteinerização: Docker</p>
+
+            <h4>Equipe</h4>
+            <p>Integrantes do grupo: Abraao J. Crispiano, Matheus R. da Silva, Pedro G. S. Ribeiro, Rodrigo M. de Oliveira, Tacio D. P. C. Farias, Valdir F. D. P. Junior, Victor H. F. Marinho, Vitor D. S. Alves</p>
+
+            <p>O documento completo do projeto foi incluído no pacote (Projeto Integrador.docx).</p>
+          </div>
+        </section>
+
+        <!-- SUCCESS -->
+        <section id="view-success" class="view">
+          <div class="card success-card">
+            <svg class="tick" viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M20 6L9 17l-5-5 1.5-1.5L9 14l9.5-9.5z"/></svg>
+            <h3>Denúncia enviada com sucesso!</h3>
+            <p id="protocolText">Seu protocolo é: <strong id="protocolValue">#0000000000</strong></p>
+            <div class="success-actions">
+              <button id="copyProtocol" class="btn">Copiar Protocolo</button>
+              <button id="submitNew" class="btn primary">Fazer nova denúncia</button>
+            </div>
+          </div>
+        </section>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
+
